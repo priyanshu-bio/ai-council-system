@@ -1,0 +1,36 @@
+import json
+
+from src.council import AICouncil
+
+
+def test_ai_council_generates_expected_structure():
+    council = AICouncil(model="gpt-4o-mini")
+    result = council.decide(
+        topic="Should we launch a new internal automation tool?",
+        context="There is a business need and moderate engineering support, but the team is lean and time is constrained.",
+        constraints=["Budget below $100k", "Must fit 8-week milestone"],
+        decision_type="operational",
+    )
+
+    assert "final_recommendation" in result
+    assert "confidence_score" in result
+    assert len(result["lower_division"]) == 8
+    assert len(result["upper_division"]) == 2
+    assert "final_decision" in result["leader"]
+    assert result["confidence_score"] > 0
+    assert isinstance(result["risks"], list)
+    assert isinstance(result["opportunities"], list)
+
+
+def test_json_output_is_serializable():
+    council = AICouncil(model="gpt-4o-mini")
+    result = council.decide(
+        topic="Evaluate the use of AI in sales support",
+        context="Sales teams need faster answers, but customer trust and accuracy are critical.",
+        constraints=["Keep team workload manageable"],
+        decision_type="strategic",
+    )
+
+    json.dumps(result)
+    assert result["metadata"]["lower_division_count"] == 8
+    assert result["metadata"]["upper_division_count"] == 2

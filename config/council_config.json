@@ -1,0 +1,31 @@
+{
+  "council": {
+    "name": "Strategic Decision Council",
+    "model": "gpt-4o-mini",
+    "temperature": 0.7,
+    "max_tokens": 2000,
+    "default_decision_type": "strategic",
+    "parallel_lower_division": true,
+    "upper_division_sequential": true,
+    "leader_final": true
+  },
+  "members": {
+    "lower_division": [
+      "risk_analyst",
+      "product_strategist",
+      "research_analyst",
+      "technical_architect",
+      "ethics_reviewer",
+      "ux_analyst",
+      "finance_analyst",
+      "ops_analyst"
+    ],
+    "upper_division": [
+      "chief_reviewer",
+      "strategy_lead"
+    ],
+    "leader": [
+      "council_leader"
+    ]
+  }
+}
